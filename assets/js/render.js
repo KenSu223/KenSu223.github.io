@@ -1,137 +1,32 @@
-/* Renders News + Publications from assets/js/site-data.js, plus the small
-   interactions: topic filter, scroll reveal, scroll progress, back-to-top. */
+/* Progressive enhancement for content already present in the HTML. */
 (function () {
   "use strict";
 
-  /* ---------- News ---------- */
   var newsList = document.getElementById("news-list");
   var newsMore = document.getElementById("news-more");
-  var news = window.NEWS || [];
-  var visible = window.NEWS_VISIBLE || 5;
-
-  function renderNews(showAll) {
-    newsList.innerHTML = "";
-    news.slice(0, showAll ? news.length : visible).forEach(function (n) {
-      var li = document.createElement("li");
-      li.innerHTML =
-        '<span class="news-date">' + n.date + "</span>" +
-        '<span class="news-text">' + n.html + "</span>";
-      newsList.appendChild(li);
-    });
-  }
-  renderNews(false);
-
-  if (news.length > visible) {
-    newsMore.hidden = false;
-    newsMore.addEventListener("click", function () {
-      var expanded = newsMore.dataset.expanded === "true";
-      renderNews(!expanded);
-      newsMore.dataset.expanded = String(!expanded);
-      newsMore.textContent = expanded ? "Show all news" : "Show less";
-    });
-  }
-
-  /* ---------- Publications ---------- */
-  var pubsList = document.getElementById("pubs-list");
-  var filterBar = document.getElementById("pub-filters");
-  var pubs = window.PUBS || [];
-
-  /* "**Tongli Su**" -> bolded author name */
-  function formatAuthors(s) {
-    return s.replace(/\*\*(.+?)\*\*/g, '<span class="me">$1</span>');
-  }
-
-  function shortVenue(v) {
-    return String(v).split("(")[0].replace(/\s*,\s*$/, "").trim();
-  }
-
-  /* A paper with no teaser image still gets a tidy block showing the venue.
-     Set `thumbLabel` in site-data.js to control that text. */
-  function thumbHTML(p) {
-    var label = p.thumbLabel || shortVenue(p.venue);
-    if (p.thumb) {
-      return '<div class="pub-thumb"><img src="' + p.thumb + '" alt="' + p.title + '" ' +
-             'onerror="this.parentNode.innerHTML=\'<span class=&quot;thumb-fallback&quot;>' +
-             label + '</span>\'"></div>';
-    }
-    return '<div class="pub-thumb"><span class="thumb-fallback">' + label + "</span></div>";
-  }
-
-  pubs.forEach(function (p) {
-    var badges = (p.badges || [])
-      .map(function (b, i) {
-        return '<span class="badge' + (i > 0 ? " soft" : "") + '">' + b + "</span>";
-      })
-      .join("");
-
-    var links = (p.links || [])
-      .map(function (l) {
-        return '<a href="' + l.url + '" target="_blank" rel="noopener">' + l.label + "</a>";
-      })
-      .join("");
-
-    var primary = (p.links && p.links.length) ? p.links[0].url : null;
-    var titleHTML = primary
-      ? '<a href="' + primary + '" target="_blank" rel="noopener">' + p.title + "</a>"
-      : p.title;
-
-    var el = document.createElement("article");
-    el.className = "pub";
-    el.dataset.tags = (p.tags || []).join("|");
-    el.innerHTML =
-      thumbHTML(p) +
-      '<div class="pub-body">' +
-        '<h3 class="pub-title">' + titleHTML + "</h3>" +
-        '<p class="pub-authors">' + formatAuthors(p.authors) + "</p>" +
-        '<p class="pub-venue"><span class="venue-name">' + p.venue + "</span>" + badges + "</p>" +
-        (p.insight ? '<p class="pub-insight">' + p.insight + "</p>" : "") +
-        (links ? '<div class="pub-links">' + links + "</div>" : "") +
-      "</div>";
-    pubsList.appendChild(el);
-  });
-
-  /* Topic filter chips, built from the tags used across all papers. */
-  var allTags = [];
-  pubs.forEach(function (p) {
-    (p.tags || []).forEach(function (t) {
-      if (allTags.indexOf(t) === -1) allTags.push(t);
-    });
-  });
-
-  if (allTags.length && filterBar) {
-    ["All"].concat(allTags).forEach(function (t, i) {
-      var b = document.createElement("button");
-      b.className = "filter-tag" + (i === 0 ? " active" : "");
-      b.textContent = t;
-      b.addEventListener("click", function () {
-        filterBar.querySelectorAll(".filter-tag").forEach(function (x) { x.classList.remove("active"); });
-        b.classList.add("active");
-        pubsList.querySelectorAll(".pub").forEach(function (card) {
-          var tags = card.dataset.tags ? card.dataset.tags.split("|") : [];
-          card.classList.toggle("hidden", t !== "All" && tags.indexOf(t) === -1);
-        });
+  if (newsList && newsMore) {
+    var items = Array.from(newsList.children);
+    var visible = Number(newsList.dataset.visible) || 5;
+    if (items.length > visible) {
+      function setExpanded(expanded) {
+        items.forEach(function (item, index) { item.hidden = !expanded && index >= visible; });
+        newsMore.setAttribute("aria-expanded", String(expanded));
+        newsMore.textContent = expanded ? "Show less" : "Show all news";
+      }
+      setExpanded(false);
+      newsMore.hidden = false;
+      newsMore.addEventListener("click", function () {
+        setExpanded(newsMore.getAttribute("aria-expanded") !== "true");
       });
-      filterBar.appendChild(b);
-    });
+    }
   }
 
-  /* ---------- Scroll reveal ---------- */
-  if ("IntersectionObserver" in window) {
-    var revealer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add("in");
-            revealer.unobserve(e.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -60px 0px", threshold: 0.05 }
-    );
-    document.querySelectorAll(".reveal").forEach(function (el) { revealer.observe(el); });
-  } else {
-    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
-  }
+  // A missing optional teaser should never leave an empty placeholder.
+  document.querySelectorAll(".pub-thumb img").forEach(function (img) {
+    function hideBrokenImage() { img.parentElement.hidden = true; }
+    img.addEventListener("error", hideBrokenImage);
+    if (img.complete && !img.naturalWidth) hideBrokenImage();
+  });
 
   /* ---------- Nav highlighting ---------- */
   var navLinks = {};
@@ -145,8 +40,9 @@
         entries.forEach(function (e) {
           var link = navLinks[e.target.id];
           if (!link || !e.isIntersecting) return;
-          Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.remove("active"); });
+          Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.remove("active"); navLinks[k].removeAttribute("aria-current"); });
           link.classList.add("active");
+          link.setAttribute("aria-current", "location");
         });
       },
       { rootMargin: "-70px 0px -70% 0px" }
@@ -169,7 +65,7 @@
 
   if (toTop) {
     toTop.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
     });
   }
 

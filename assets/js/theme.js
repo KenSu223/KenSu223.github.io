@@ -1,17 +1,25 @@
-/* Dark-mode toggle. The initial class is set inline in <head> to avoid a flash. */
+/* The initial theme is set in <head>; storage is optional. */
 (function () {
   "use strict";
   var btn = document.getElementById("theme-toggle");
   if (!btn) return;
+  var chosen = false;
+  try { chosen = !!localStorage.getItem("theme"); } catch (e) {}
 
+  function syncButton() {
+    btn.setAttribute("aria-pressed", String(document.documentElement.classList.contains("dark")));
+  }
+  syncButton();
+  btn.hidden = false;
   btn.addEventListener("click", function () {
     var dark = document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", dark ? "dark" : "light");
+    chosen = true;
+    try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+    syncButton();
   });
-
-  /* Follow the OS setting as long as the visitor has not chosen one. */
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
-    if (localStorage.getItem("theme")) return;
+    if (chosen) return;
     document.documentElement.classList.toggle("dark", e.matches);
+    syncButton();
   });
 })();

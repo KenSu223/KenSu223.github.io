@@ -1,0 +1,192 @@
+% Ken (Tongli) Su - PhD-level AI/ML Resume - 2 pages
+% Website CV source. Compile with: tectonic -X compile assets/files/Ken_Su_CV.tex
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage[left=0.5in,right=0.5in,top=0.4in,bottom=0.4in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+
+\definecolor{accent}{HTML}{1F3864}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\titleformat{\section}{\normalsize\bfseries\color{accent}}{}{0em}{}[\vspace{-0.62em}\rule{\textwidth}{0.8pt}]
+\titlespacing*{\section}{0pt}{7pt}{4pt}
+
+\setlist[itemize]{leftmargin=1.05em, itemsep=0.5pt, topsep=1.5pt, parsep=0pt}
+
+\newcommand{\role}[3]{%
+  \textbf{#1} \textnormal{|} #2 \hfill #3\par\vspace{-1pt}
+}
+\newcommand{\proj}[2]{%
+  \vspace{2pt}\textit{#1} \hfill #2\par\vspace{-1pt}
+}
+\newcommand{\edu}[4]{%
+  \textbf{#1} \hfill #2\par
+  \textit{#3} \hfill #4\par\vspace{2pt}
+}
+
+\begin{document}
+\small
+
+%==================== HEADER ====================
+\begin{center}
+  {\LARGE\bfseries Ken (Tongli) Su}\\[3pt]
+  {\small +1 404-384-4141 \textperiodcentered\ \href{mailto:ken.su@emory.edu}{ken.su@emory.edu} \textperiodcentered\
+  \href{https://www.linkedin.com/in/ken-su}{linkedin.com/in/ken-su} \textperiodcentered\ Atlanta, GA}
+\end{center}
+
+%==================== SUMMARY ====================
+\section{Research Summary}
+{\footnotesize
+Computer Science PhD student at Emory University (advisor: Liang Zhao) researching \textbf{LLM agents, alignment,
+and AI interpretability and safety}. My goal is to help people accomplish complex tasks with AI while retaining meaningful control.
+I am particularly interested in \textbf{multi-agent collaboration and theory of mind}, personalized assistance, and when agents
+should involve humans. My work includes repository retrieval for coding agents (\textbf{LARGER}, co-first author), software world
+models, and cross-modal physiological signal generation (\textbf{EMBC 2026 oral}, first author).
+Before the PhD I spent 2+ years as an ML engineer shipping production LLM, retrieval, and forecasting systems across manufacturing,
+finance, consumer goods, and insurance. Reviewer, NeurIPS 2026.
+\par}
+
+%==================== EDUCATION ====================
+\section{Education}
+\edu{Emory University}{Atlanta, GA}{Ph.D. in Computer Science --- Advisor: Liang Zhao}{Aug 2025 -- Dec 2028 (expected)}
+\edu{Columbia University}{New York, NY}{M.S. in Data Science, GPA: 3.95/4.00}{Dec 2023}
+\edu{Emory University}{Atlanta, GA}{B.A. in Computer Science \& B.A. in Economics (Dual Major), GPA: 3.84/4.00}{May 2022}
+
+%==================== RESEARCH ====================
+\section{Research Experience \& Publications}
+
+\role{Research Intern}{Causal Dynamics Lab}{Jul 2026 -- Aug 2026}
+Research on coding agents and software world models, including predicting the consequences of changes across software systems.
+\par\vspace{4pt}
+
+\role{Graduate Research Assistant --- LLM Agents \& Retrieval}{Emory University, Advisor: Liang Zhao}{Aug 2025 -- Present}
+\proj{LARGER: Lexically Anchored Repository Graph Exploration and Retrieval --- \normalfont\textbf{co-first author}}{\normalfont arXiv:2605.16352, 2026 (under review)}
+\begin{itemize}
+  \item Studied repository localization errors in coding agents: lexical search can miss imports, call chains, type hierarchies,
+  and code--test links, motivating structural retrieval integrated into the agent's existing search workflow.
+  \item Formalized \textbf{Lexically Anchored Structural Localization}: a fixed agent policy turns its own lexical observations into structural
+  graph anchors and progressively exposes compact, confidence-filtered local neighborhoods --- delivering graph evidence \textit{within} lexical
+  observations rather than through new agent actions, so the method drops into existing CLI agents unchanged.
+  \item Decomposed the joint objective into \textbf{graph quality} and \textbf{retrieval efficiency}, proposing a divide-and-conquer approximation that
+  reduces global subgraph search to lexical anchoring plus confidence-scored local expansion, and engineered the full system: multi-language
+  \textbf{AST-based graph construction}, edge weighting, and community detection for graph quality; lightweight \textbf{sidecar storage},
+  \textbf{dynamic lexical propagation}, and \textbf{budget-aware filtering} for retrieval efficiency.
+  \item Evaluated across \textbf{4 benchmarks} (LocBench, MuLocBench, SWE-Atlas Test Writing, SWE-Atlas Codebase QA) against \textbf{7 baselines}
+  (BM25, Agentless, LocAgent, SWE-agent, OpenHands, Claude Code, Codex): \textbf{+13.9 Acc@5} tuned, \textbf{+11.8 Acc@5} with fixed hyperparameters
+  (robust without per-benchmark tuning), and \textbf{+12.2 Recall@5}, surpassing strong proprietary baselines on codebase QA and test writing.
+\end{itemize}
+\vspace{4pt}
+
+\role{Graduate Researcher --- Cross-Modal Generative Modeling}{Emory University, Katebi \& Clifford Lab}{2025 -- Present}
+\proj{Cross-Modal Signal Translation from Fetal--Maternal ECG to Fetal Doppler Waveforms --- \normalfont\textbf{first author}}{\normalfont IEEE EMBC 2026, \textbf{Oral}}
+\begin{itemize}
+  \item Developed cross-modal generation from fetal and maternal ECG to Doppler waveforms, studying which aspects of fetal
+  cardiovascular function are recoverable from electrical signals and where reconstruction remains limited.
+  \item Designed an architecture combining \textbf{dilated convolutions} (large receptive field for long-range temporal dependencies),
+  \textbf{cross-modal attention} (fetal features as queries, maternal ECG as keys/values, selectively attending to maternal segments temporally
+  correlated with fetal blood flow), and \textbf{self-attention} over the fetal signal.
+  \item Trained on \textbf{885 synchronized fetal/maternal ECG--Doppler envelope segments from 39 pregnancies}: \textbf{PSD MSE 49.9\,$\pm$\,15.8\,dB\textsuperscript{2}}
+  (\textbf{51\% below} the two-channel baseline) and heart-rate error \textbf{4.71\,$\pm$\,0.77\,bpm} (\textbf{1.5\% better}; negligible against the
+  110--160\,bpm physiological range).
+  \item Compared ways to incorporate maternal ECG: \textbf{cross-modal attention reduces PSD MSE by 39\%} relative to naive
+  dual-channel concatenation, supporting selective use of maternal information for waveform reconstruction.
+  \item Introduced a \textbf{composite loss} balancing pointwise error, derivative error, and correlation to enforce amplitude accuracy and morphological
+  fidelity simultaneously.
+\end{itemize}
+\vspace{4pt}
+
+\proj{A Review of Multimodal Pretraining Strategies for Physiological Wearable Sensor Foundation Models --- \normalfont\textbf{first author}}{\normalfont Under review, 2026}
+\begin{itemize}
+  \item Screened arXiv, Google Scholar, Semantic Scholar, PubMed, Web of Science, and IEEE Xplore (Jan 2024 -- early 2026), synthesizing \textbf{22 papers}
+  into the first review organized around \textbf{multimodal pretraining strategy} as the primary lens rather than as one topic among many.
+  \item Proposed a taxonomy of \textbf{five pretraining paradigms} --- contrastive, generative/reconstruction, language-grounded alignment, missing-modality
+  learning, and cross-modal knowledge distillation --- comparing objective design and architectural patterns across PPG, ECG, EEG, and ACC.
+  \item Analyzed the recent model cohort (SleepFM, LSM/LSM-2, MoCA, NormWear, SensorLM, PhysioOmni, CSFM, AnyPPG) to extract shared successful principles
+  (shared cross-modal representation spaces, physiology-aware positive pairing, masked cross-modal reconstruction) and open challenges in personalization,
+  robustness to missing sensors, and demographic bias.
+\end{itemize}
+
+\newpage
+
+%==================== INDUSTRY ====================
+\section{Industry Experience}
+
+\role{Machine Learning Engineer, GenAI}{DuPont Specialty Products USA, LLC}{New York, NY \textbar\ Jul 2024 -- Aug 2025}
+\begin{itemize}
+  \item Collaborated cross-functionally to build a scalable lead identification and prioritization pipeline on \textbf{Azure Databricks} using
+  \textbf{Spark}, \textbf{Delta Lake}, and generative models, powering an internal co-pilot for sales managers that became the company's primary method
+  for identifying potential customers and contributed \textbf{over \$60 million} in estimated business value.
+  \item Fine-tuned a \textbf{Sentence-BERT} model with \textbf{triplet loss} on a retrieval-and-ranking task matching leads to relevant internal
+  applications: \textbf{Recall@5 of 0.86} and \textbf{MRR of 0.64}, a \textbf{27\% improvement} over the existing GPT-based system, with hallucinations
+  eliminated. Enabled marketing efforts that converted leads into \textbf{over \$3 million} in revenue.
+  \item Engineered a data enrichment module on the \textbf{OpenAI API} with round-robin load balancing, asynchronous processing, and batch handling:
+  pipeline runtime \textbf{10\,h\,$\rightarrow$\,6\,h (40\% reduction)}, token costs down \textbf{\$12,000/year}, and plug-and-play deployment saving
+  \textbf{60 hours} of development time on related projects.
+  \item Translated business feedback into model improvements and new features over a six-week sprint, \textbf{increasing DAU 48\%} while raising average
+  user satisfaction from 4.0 to 4.6/5. Presented results to company leadership, securing additional resources for continued development.
+\end{itemize}
+\vspace{4pt}
+
+\role{Machine Learning Engineer}{ICBC Financial Service, LLC}{New York, NY \textbar\ Feb 2024 -- May 2024}
+\begin{itemize}
+  \item Collaborated with research scientists to develop an in-house \textbf{foundation model} based on \textbf{transformers}, establishing a robust training
+  loop with the Bing Search API for periodic continuous re-pretraining. \textbf{Few-shot learning} for financial report translation reached \textbf{BLEU 0.59}
+  (cumulative to 4-grams), reducing external translation costs \textbf{\$30,000/year} and turnaround time \textbf{50\%}.
+  \item Created a \textbf{Flask} application with Python-embedded \textbf{T-SQL} and \textbf{parameterized queries}, reducing data retrieval time \textbf{40\%}
+  (saving the team 20 hours/week on compliance requests) and eliminating SQL injection risk; \textbf{85\% user adoption} among 50 team members in month one.
+  \item Optimized \textbf{MySQL} scripts by rewriting queries and implementing indexing, cutting job runtime \textbf{50\%} (4\,h\,$\rightarrow$\,2\,h) and server
+  load \textbf{30\%}, enabling timely investment decisions that contributed to a \textbf{3\% increase} in portfolio returns.
+\end{itemize}
+\vspace{4pt}
+
+\role{Machine Learning Scientist}{Unilever United States, Inc}{New York, NY \textbar\ Sep 2023 -- Dec 2023}
+\begin{itemize}
+  \item Developed a \textbf{multi-modal neural network} with \textbf{PyTorch} and \textbf{Keras} combining tabular product features with image embeddings
+  extracted from a fine-tuned \textbf{VGG16} model, improving \textbf{R\textsuperscript{2} by 54\%} over the baseline \textbf{XGBoost} model in sales volume
+  prediction and optimizing \textbf{\$3 million} in supply chain and inventory management cost.
+  \item Engineered an \textbf{ETL pipeline} for e-commerce merchant datasets ($\sim$100\,GB) in heterogeneous formats with \textbf{PySpark} and \textbf{Spark SQL},
+  enhancing data quality through advanced cross-joining techniques and Levenshtein distance matching.
+  \item Deployed the model as an end-to-end pipeline on \textbf{GCP} enabling scalable real-time sales forecasting with scheduled and event-trigger workflows
+  and managed task dependencies, enhancing operational efficiency \textbf{20\%} per business team feedback.
+\end{itemize}
+\vspace{4pt}
+
+\role{Data Scientist, Personal Insurance R\&D}{The Travelers Companies, Inc}{Hartford, CT \textbar\ Jun 2023 -- Aug 2023}
+\begin{itemize}
+  \item Crafted and deployed a risk assessment model using \textbf{LightGBM}, augmented with rule-based triggers and fine-tuned via \textbf{Optuna} with
+  customized objective functions, achieving estimated annual savings of \textbf{\$15 million} in claim resolving cost in backtesting.
+  \item Developed a \textbf{Cox Proportional Hazard} model incorporating \textbf{SMOTE} to predict occurrences of roof discoloration and damage, achieving
+  \textbf{Harrell's c-index of 0.73} and enabling an inspection schedule that cut average customer life-time on-site inspection cost \textbf{12\%} per policy.
+  \item Conducted extensive \textbf{exploratory data analysis} and presented findings to leadership, demonstrating model-update benefits that boosted the
+  project's prioritization and lifted the referral action capture rate \textbf{33\%} (from 32.4\% to 43.1\%).
+\end{itemize}
+
+%==================== SKILLS ====================
+\section{Technical Skills}
+\vspace{1pt}
+{\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{1.5in}X@{}}
+  \textbf{LLM \& Generative AI} & Transformers (Hugging Face), LLM \& CLI coding agents, retrieval and ranking (RAG, BM25, graph retrieval), fine-tuning (LoRA, triplet loss), Sentence-BERT, few-shot learning, prompt design, OpenAI API, evaluation (Acc@k, Recall@k, MRR, BLEU) \\[1.5pt]
+  \textbf{ML \& Deep Learning} & PyTorch, TensorFlow, Keras, Scikit-learn, LightGBM, XGBoost, Optuna; attention mechanisms, cross-modal \& multimodal architectures, generative models, self-supervised \& contrastive learning, foundation model pretraining, time-series \& biosignal modeling, survival analysis \\[1.5pt]
+  \textbf{Programming Languages} & Python, SQL, R, Java, JavaScript, C++, MATLAB, Bash, HTML, STATA \\[1.5pt]
+  \textbf{Big Data \& Engineering} & Spark, PySpark, Dask, Pandas, NumPy, Statsmodels, Hadoop, Airflow, Databricks, Delta Lake, MySQL, PostgreSQL, T-SQL, MongoDB, Flask, BeautifulSoup \\[1.5pt]
+  \textbf{Cloud \& Visualization} & AWS (EC2, S3, Redshift), Azure (VM, DevOps), GCP (VM, Cloud Storage, BigQuery); Tableau, Power BI, Seaborn, Matplotlib \\
+\end{tabularx}
+}
+
+%==================== SERVICE ====================
+\section{Academic Service}
+\begin{itemize}
+  \item \textbf{Reviewer}, Conference on Neural Information Processing Systems (\textbf{NeurIPS}) \textbf{2026}.
+  \item \textbf{Presenter (Oral)}, IEEE Engineering in Medicine \& Biology Conference (EMBC) 2026.
+\end{itemize}
+
+\end{document}

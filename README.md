@@ -1,7 +1,8 @@
 # Ken (Tongli) Su — personal academic website
 
-Plain HTML + CSS + JavaScript. No Ruby, no Node, no build step. Double-click `index.html`
-to view it locally; push it to GitHub to put it online.
+Static HTML + CSS with optional JavaScript interactions. Double-click `index.html` to preview it;
+push the generated HTML to GitHub to publish. Visitors do not need JavaScript to read any content.
+Node.js is used only to regenerate News and Publications after editing their data.
 
 ```
 website/
@@ -9,7 +10,7 @@ website/
 ├── assets/
 │   ├── css/style.css           # all styling; colors live in the :root / html.dark blocks at the top
 │   ├── js/site-data.js         # ← NEWS + PUBLICATIONS live here. This is the file you edit most.
-│   ├── js/render.js            # renders news + publications, highlights the nav
+│   ├── js/render.js            # enhances static news, highlights nav, and handles scrolling
 │   ├── js/theme.js             # dark-mode toggle
 │   ├── img/profile.jpg         # headshot
 │   ├── img/favicon.svg         # browser-tab icon ("KS")
@@ -43,10 +44,10 @@ use the full width of the box.
 
 ## What makes the page "flashy"
 
-A scroll-progress bar in the nav, fade-up reveals per section, hover-lift cards, a topic filter
-over the publications, a gradient accent bar on each heading, and a floating back-to-top button —
-all on a plain white background, with a plain black name and an unframed photo. Everything respects
-`prefers-reduced-motion`, and the page still reads fine with JavaScript disabled.
+A compact desktop profile, three research-question cards, and prominent publication entries sit
+on a white background with navy accents. Education and experience use simple rows. Dark mode,
+nav highlighting, news expansion and back-to-top are progressive enhancements. Text is visible
+by default and scroll interactions respect `prefers-reduced-motion`.
 
 ## Adding a paper
 
@@ -69,6 +70,24 @@ Open `assets/js/site-data.js` and add an object at the top of `window.PUBS`:
 ```
 
 Adding news works the same way — push an object with `date` and `html` to `window.NEWS`.
+Then regenerate the checked-in HTML before previewing or publishing:
+
+```bash
+node scripts/build-content.mjs
+node scripts/build-content.mjs --check
+```
+
+Only the marked News and Publications blocks are generated. Edit the rest of `index.html` directly.
+No teaser is rendered unless a real `thumb` path is supplied. All news remains readable without JS;
+with JS, `NEWS_VISIBLE` controls the initial count.
+
+The website CV source is `assets/files/Ken_Su_CV.tex`. Compile with Tectonic:
+
+```bash
+tectonic -X compile assets/files/Ken_Su_CV.tex
+```
+
+Keep the PDF and its source together when updating the CV.
 
 ## Publishing on GitHub Pages
 

@@ -77,7 +77,7 @@ node scripts/build-content.mjs
 node scripts/build-content.mjs --check
 ```
 
-Only the marked News and Publications blocks are generated. Edit the rest of `index.html` directly.
+The script generates the marked News and Publications blocks and adds content-based version IDs to CSS and JavaScript URLs. Run it after changing styles or scripts too, so browsers fetch the updated assets. Edit the rest of `index.html` directly.
 No teaser is rendered unless a real `thumb` path is supplied. All news remains readable without JS;
 with JS, `NEWS_VISIBLE` controls the initial count.
 

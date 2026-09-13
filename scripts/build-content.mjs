@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 
 const root = new URL('../', import.meta.url);
 const context = { window: {} };
@@ -39,9 +40,15 @@ for (const [name, content] of Object.entries({ news, publications })) {
   if (!pattern.test(html)) throw new Error(`Missing ${name} content markers in ${fileURLToPath(path)}`);
   html = html.replace(pattern, `<!-- generated:${name}:start -->\n    ${content}\n    <!-- generated:${name}:end -->`);
 }
+// Changed assets get a new URL so visitors do not reuse an older cached file.
+for (const asset of ['assets/css/style.css', 'assets/js/theme.js', 'assets/js/render.js']) {
+  const version = createHash('sha256').update(readFileSync(new URL(asset, root))).digest('hex').slice(0, 12);
+  const pattern = new RegExp(`"${asset.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\?v=[a-zA-Z0-9_-]+)?"`, 'g');
+  html = html.replace(pattern, `"${asset}?v=${version}"`);
+}
 if (process.argv.includes('--check')) {
-  if (html !== original) throw new Error('Static content is stale. Run node scripts/build-content.mjs.');
-  console.log('Static news and publications are up to date.');
+  if (html !== original) throw new Error('Static content or asset versions are stale. Run node scripts/build-content.mjs.');
+  console.log('Static content and asset versions are up to date.');
 } else {
   writeFileSync(path, html);
   console.log(`Built ${NEWS.length} news items and ${PUBS.length} publications.`);

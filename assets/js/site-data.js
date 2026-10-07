@@ -42,6 +42,18 @@ window.NEWS_VISIBLE = 5;
    --------------------------------------------------------- */
 window.PUBS = [
   {
+    title: "Software World Models: From Consequence Prediction to Decision Value",
+    authors: "**Tongli Su***, Yuntong Hu*, Liang Zhao, Bowen Zhu, JayaSai Somasundaram, Hasibul Haque",
+    authorNote: "* Equal contribution",
+    venue: "arXiv preprint, 2026 (under review)",
+    badges: [],
+    insight: "Predicts which downstream services, libraries, and datastores a coding agent's change will break before it runs, and uses those predictions to rank changes, plan migrations, and decide when another check is worth running.",
+    thumb: "",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2610.04940" }
+    ]
+  },
+  {
     title: "LARGER: Lexically Anchored Repository Graph Exploration and Retrieval",
     authors: "Yuntong Hu*, **Tongli Su***, Liang Zhao, Bowen Zhu, Hasibul Haque",
     authorNote: "* Equal contribution",
@@ -62,7 +74,7 @@ window.PUBS = [
     insight: "Uses fetal and maternal ECG to reconstruct Doppler waveforms and study which aspects of fetal cardiovascular function are recoverable across modalities.",
     thumb: "",
     links: [
-      { label: "PDF", url: "assets/files/fECG2Doppler.pdf" }
+      { label: "arXiv", url: "https://arxiv.org/abs/2607.08073" }
     ]
   },
   {

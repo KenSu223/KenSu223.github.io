@@ -12,6 +12,10 @@
    --------------------------------------------------------- */
 window.NEWS = [
   {
+    date: "2026.10",
+    html: '<strong>Software World Models</strong> is on arXiv — predicting which downstream services and libraries a code change will break before a coding agent runs it (<a href="https://arxiv.org/abs/2610.04940" target="_blank" rel="noopener">arXiv:2610.04940</a>).'
+  },
+  {
     date: "2026.05",
     html: '<strong>LARGER</strong> is on arXiv — lexically anchored repository graph retrieval for CLI coding agents (<a href="https://arxiv.org/abs/2605.16352" target="_blank" rel="noopener">arXiv:2605.16352</a>).'
   },

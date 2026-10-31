@@ -46,6 +46,17 @@ window.NEWS_VISIBLE = 5;
    --------------------------------------------------------- */
 window.PUBS = [
   {
+    title: "Adaptive Memory Index Evolution for Agents",
+    authors: "Yuntong Hu, **Tongli Su**, Yuanfu Sun, Shuo Ma, Qiaoyu Tan, Liang Zhao",
+    venue: "arXiv preprint, 2026 (under review)",
+    badges: [],
+    insight: "Adds a lightweight plug-in layer that learns which stored memories an agent should surface or suppress from its own retrieval history, improving downstream accuracy across five memory systems and three benchmarks without changing stored content or retraining the host.",
+    thumb: "",
+    links: [
+      { label: "arXiv", url: "https://arxiv.org/abs/2610.34977" }
+    ]
+  },
+  {
     title: "Software World Models: From Consequence Prediction to Decision Value",
     authors: "**Tongli Su***, Yuntong Hu*, Liang Zhao, Bowen Zhu, JayaSai Somasundaram, Hasibul Haque",
     authorNote: "* Equal contribution",

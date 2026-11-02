@@ -1,4 +1,4 @@
-% Ken (Tongli) Su - 1-page resume, PUBLIC WEBSITE VERSION (phone number removed). Synced from Ken_Su_Resume_PhD_1page.tex on 2026-10-30.
+% Ken (Tongli) Su - 1-page resume, PUBLIC WEBSITE VERSION (phone number removed). Synced from Ken_Su_Resume_PhD_1page.tex on 2026-11-02.
 % Compile with: tectonic -X compile Ken_Su_CV.tex
 \documentclass[letterpaper,10pt]{article}
 
@@ -100,26 +100,25 @@ human input. Co-first author of \textbf{Software World Models} (predicting what 
 
 %==================== EXPERIENCE ====================
 \section{Industry Experience}
+\role{Research Intern}{Causal Dynamics Lab}{May 2026 -- Aug 2026}{}
+\begin{itemize}
+  \item Researched coding agents and code intelligence; built a \textbf{software world model} for multi-repository microservice systems that predicts which
+  downstream services, libraries, and datastores an agent's change will break \textit{before} it reaches CI/CD --- failures local tests miss.
+  \item Engineered a sandboxed \textbf{execution harness} that restores frozen system baselines, applies one patch, and reruns unit, service-health, and
+  end-to-end checks across Go/Node/Python \textbf{gRPC microservices} and real library ecosystems (Marshmallow, OpenTelemetry).
+  \item Built the training and serving pipeline: typed cross-repo dependency graphs (services, endpoints, schemas) fed to the LLM as graph tokens,
+  \textbf{SFT + GRPO} on executed outcomes, and a \textbf{pre-merge risk check} that lets the agent rank changes, migrate consumers before shipping,
+  and run costly integration checks only when worthwhile --- \textbf{$\sim$40\% fewer} services left broken on held-out systems.
+\end{itemize}
+\vspace{3pt}
+
 \role{Machine Learning Engineer, GenAI}{DuPont Specialty Products USA, LLC}{New York, NY \textbar\ Jul 2024 -- Aug 2025}{}
 \begin{itemize}
   \item Built a lead identification pipeline on \textbf{Azure Databricks} (Spark, Delta Lake, generative models) behind an internal sales co-pilot that
   became the company's primary prospecting tool (\textbf{\$60M+} estimated value); fine-tuned \textbf{Sentence-BERT} with triplet loss for retrieval and
   ranking: \textbf{Recall@5 0.86}, \textbf{MRR 0.64}, \textbf{+27\%} over the incumbent GPT-based system with hallucinations eliminated.
   \item Engineered an async, load-balanced \textbf{OpenAI API} enrichment module: runtime 10\,h\,$\rightarrow$\,6\,h (\textbf{40\%}), token costs \textbf{--\$12K/yr}.
-\end{itemize}
-\vspace{3pt}
-
-\role{Machine Learning Engineer}{ICBC Financial Service, LLC}{New York, NY \textbar\ Feb 2024 -- May 2024}{}
-\begin{itemize}
-  \item Developed an in-house \textbf{transformer foundation model} with a Bing Search API continual re-pretraining loop; \textbf{few-shot} financial
-  report translation reached \textbf{BLEU 0.59} (cumulative 4-gram), cutting translation costs \textbf{\$30K/yr} and turnaround \textbf{50\%}.
-\end{itemize}
-\vspace{3pt}
-
-\role{Machine Learning Scientist}{Unilever United States, Inc}{New York, NY \textbar\ Sep 2023 -- Dec 2023}{}
-\begin{itemize}
-  \item Built a \textbf{multi-modal neural network} (PyTorch/Keras) fusing tabular product features with fine-tuned VGG16 image embeddings, deployed on
-  \textbf{GCP} for real-time forecasting: sales-volume \textbf{R\textsuperscript{2} +54\%} over XGBoost, optimizing \textbf{\$3M} in supply chain cost.
+  \item Turned user feedback into model and feature improvements over a six-week sprint: \textbf{DAU +48\%}, user satisfaction 4.0\,$\rightarrow$\,4.6/5.
 \end{itemize}
 
 %==================== SKILLS ====================

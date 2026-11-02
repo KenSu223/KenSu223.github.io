@@ -1,4 +1,4 @@
-% Ken (Tongli) Su - 1-page resume, PUBLIC WEBSITE VERSION (phone number removed). Synced from Ken_Su_Resume_PhD_1page.tex on 2026-09-25.
+% Ken (Tongli) Su - 1-page resume, PUBLIC WEBSITE VERSION (phone number removed). Synced from Ken_Su_Resume_PhD_1page.tex on 2026-10-30.
 % Compile with: tectonic -X compile Ken_Su_CV.tex
 \documentclass[letterpaper,10pt]{article}
 
@@ -41,10 +41,10 @@
 \vspace{-2pt}
 
 {\footnotesize
-CS PhD student at Emory working on \textbf{LLM agents, alignment, interpretability, and safety}, especially multi-agent
+CS PhD student working on \textbf{LLM agents, alignment, interpretability, and safety}, especially multi-agent
 collaboration and theory of mind: agents that reason about collaborators' beliefs, adapt to human values, and know when to seek
-human input. Co-first author of LARGER, a retrieval method for LLM coding agents that outperforms seven baselines including
-Claude Code and Codex; first author on an EMBC 2026 oral. Reviewer, NeurIPS 2026.
+human input. Co-first author of \textbf{Software World Models} (predicting what a change breaks before it runs) and
+\textbf{LARGER} (beats 7 baselines incl.\ Claude Code, Codex); first author, EMBC 2026 oral. Reviewer, NeurIPS 2026.
 \par}
 \vspace{1pt}
 
@@ -58,45 +58,54 @@ Claude Code and Codex; first author on an EMBC 2026 oral. Reviewer, NeurIPS 2026
 \section{Selected Publications \& Research}
 \vspace{1pt}
 \begin{enumerate}[leftmargin=1.3em, itemsep=3pt, topsep=0pt, parsep=0pt, label={[\arabic*]}]
+  \item \textbf{T.~Su}\textsuperscript{*}, Y.~Hu\textsuperscript{*}, L.~Zhao, B.~Zhu, J.~Somasundaram, H.~Haque. ``Software World Models: From
+  Consequence Prediction to Decision Value.'' \textit{arXiv:2610.04940}, 2026. \textit{(Under review; \textsuperscript{*}equal contribution.)}
+  \begin{itemize}
+    \item Formulated \textbf{system-level consequence prediction} for coding agents: predict the \textbf{blast set} --- the downstream services,
+    libraries, and datastores a locally correct change will break --- \textit{before} execution, beyond what the agent itself observes.
+    \item Built \textbf{Explore--Learn--Act}: execute counterfactual changes from restored system states, train Qwen2.5-Coder with \textbf{GRPO} on
+    executed outcomes (plus an R-GCN graph-token variant with \textbf{SC-GRPO}), and act on per-consumer break probabilities.
+    \item Blast-set F1 \textbf{0.431\,$\rightarrow$\,0.571} vs.\ static reachability and ranking regret \textbf{more than halved}; on held-out real libraries,
+    agent return \textbf{0.453\,$\rightarrow$\,0.613}, above the CWM and Qwen-AgentWorld world-model baselines.
+  \end{itemize}
+
+  \item Y.~Hu, \textbf{T.~Su}, Y.~Sun, S.~Ma, Q.~Tan, L.~Zhao. ``Adaptive Memory Index Evolution for Agents.''
+  \textit{arXiv:2610.34977}, 2026. \textit{(Under review.)}
+  \begin{itemize}
+    \item \textbf{AMIE}: a plug-in \textbf{memory index evolution} layer that distills an LLM teacher's keep/suppress judgments into a Qwen3-8B LoRA policy and
+    accumulates them into persistent per-memory access state, with no change to stored content or host retraining. Improved downstream
+    F1/accuracy in \textbf{all 15} comparisons (\textbf{5 memory systems} incl.\ Mem0, A-MEM $\times$ \textbf{3 benchmarks}) by up to \textbf{25\%} relative.
+  \end{itemize}
+
   \item Y.~Hu\textsuperscript{*}, \textbf{T.~Su}\textsuperscript{*}, L.~Zhao, B.~Zhu, H.~Haque. ``LARGER: Lexically Anchored
   Repository Graph Exploration and Retrieval.'' \textit{arXiv:2605.16352}, 2026. \textit{(Under review; \textsuperscript{*}equal contribution.)}
   \begin{itemize}
-    \item Formalized \textbf{Lexically Anchored Structural Localization}: anchor a coding agent's own lexical search hits into a repository
-    graph, then expand confidence-filtered neighborhoods \textit{inside} its existing search loop --- delivering structural evidence
-    (imports, call chains, code--test links) with no external graph database, graph tools, or added agent actions.
-    \item Built the system end to end: multi-language \textbf{AST-based graph construction}, edge weighting, and community detection for graph
-    quality; sidecar storage, dynamic lexical propagation, and budget-aware filtering for retrieval efficiency.
-    \item \textbf{+13.9 Acc@5} (tuned), \textbf{+11.8} (fixed hyperparameters), and \textbf{+12.2 Recall@5} over the strongest of \textbf{7 baselines}
-    (BM25, Agentless, LocAgent, SWE-agent, OpenHands, Claude Code, Codex), with consistent gains across \textbf{4 benchmarks} spanning
-    localization, test generation, and codebase QA.
+    \item Anchored a coding agent's own lexical search hits into a repository graph and expanded confidence-filtered neighborhoods
+    \textit{inside} its search loop (imports, call chains, code--test links) with no added agent actions; built \textbf{AST-based graph construction} end to end.
+    \item \textbf{+13.9 Acc@5} and \textbf{+12.2 Recall@5} over the strongest of \textbf{7 baselines} (BM25, Agentless, LocAgent, SWE-agent, OpenHands,
+    Claude Code, Codex) across \textbf{4 benchmarks} spanning localization, test generation, and codebase QA.
   \end{itemize}
 
   \item \textbf{T.~Su}, A.~Rafiei, M.~van Assen, R.~Sameni, G.~D.~Clifford, F.~Marzbanrad, N.~Katebi. ``Cross-Modal Generative
   Framework for Signal Translation from Fetal--Maternal Electrocardiograms to Fetal Doppler Waveforms.''
   \textit{IEEE EMBC 2026}. \textbf{Accepted --- Oral Presentation.}
   \begin{itemize}
-    \item Designed a cross-modal generative architecture (dilated convolutions + cross-modal attention + self-attention) synthesizing
-    fetal Doppler envelopes from dual-lead ECG, trained on \textbf{885 synchronized segments from 39 pregnancies}: \textbf{PSD MSE 49.9\,dB\textsuperscript{2}}
-    (\textbf{51\% below} the two-channel baseline) and \textbf{4.71\,bpm} heart-rate error.
-    \item Showed via ablation that naive maternal-ECG concatenation yields no benefit while \textbf{cross-modal attention cuts PSD MSE 39\%} ---
-    quantifying maternal--fetal cardiac coupling as selective and time-varying.
+    \item Designed a cross-modal generator (dilated convolutions + \textbf{cross-modal attention} + self-attention) for ECG-to-Doppler translation:
+    PSD MSE \textbf{51\% below} baseline; ablations show naive concatenation adds nothing while cross-modal attention cuts error \textbf{39\%}.
   \end{itemize}
 
   \item \textbf{T.~Su}, N.~Barari, N.~Katebi. ``A Review of Multimodal Pretraining Strategies for Physiological Wearable Sensor
-  Foundation Models.'' \textit{Under review}, 2026. --- Synthesized \textbf{22 papers (2024--2026)} into a taxonomy of five pretraining
-  paradigms (contrastive, generative, language-grounded, missing-modality, cross-modal distillation) across PPG/ECG/EEG/ACC.
+  Foundation Models.'' \textit{Under review}, 2026. --- Taxonomy of five multimodal pretraining paradigms over \textbf{22 papers} across PPG/ECG/EEG/ACC.
 \end{enumerate}
 
 %==================== EXPERIENCE ====================
 \section{Industry Experience}
 \role{Machine Learning Engineer, GenAI}{DuPont Specialty Products USA, LLC}{New York, NY \textbar\ Jul 2024 -- Aug 2025}{}
 \begin{itemize}
-  \item Built a scalable lead identification and prioritization pipeline on \textbf{Azure Databricks} (Spark, Delta Lake, generative models),
-  powering an internal co-pilot that became the company's primary method for identifying prospects --- \textbf{\$60M+} estimated business value.
-  \item Fine-tuned \textbf{Sentence-BERT} with triplet loss for retrieval and ranking: \textbf{Recall@5 0.86}, \textbf{MRR 0.64} (\textbf{+27\% over the
-  incumbent GPT-based system}) with hallucinations eliminated; drove marketing converting to \textbf{\$3M} revenue.
-  \item Engineered an \textbf{OpenAI API} enrichment module (round-robin load balancing, async processing, batch handling): runtime
-  10\,h\,$\rightarrow$\,6\,h (\textbf{40\%}), token costs \textbf{--\$12K/yr}, \textbf{60\,h} development time saved.
+  \item Built a lead identification pipeline on \textbf{Azure Databricks} (Spark, Delta Lake, generative models) behind an internal sales co-pilot that
+  became the company's primary prospecting tool (\textbf{\$60M+} estimated value); fine-tuned \textbf{Sentence-BERT} with triplet loss for retrieval and
+  ranking: \textbf{Recall@5 0.86}, \textbf{MRR 0.64}, \textbf{+27\%} over the incumbent GPT-based system with hallucinations eliminated.
+  \item Engineered an async, load-balanced \textbf{OpenAI API} enrichment module: runtime 10\,h\,$\rightarrow$\,6\,h (\textbf{40\%}), token costs \textbf{--\$12K/yr}.
 \end{itemize}
 \vspace{3pt}
 
@@ -104,17 +113,13 @@ Claude Code and Codex; first author on an EMBC 2026 oral. Reviewer, NeurIPS 2026
 \begin{itemize}
   \item Developed an in-house \textbf{transformer foundation model} with a Bing Search API continual re-pretraining loop; \textbf{few-shot} financial
   report translation reached \textbf{BLEU 0.59} (cumulative 4-gram), cutting translation costs \textbf{\$30K/yr} and turnaround \textbf{50\%}.
-  \item Shipped a \textbf{Flask} app with embedded parameterized T-SQL: data retrieval time \textbf{--40\%}, SQL injection risk eliminated,
-  \textbf{85\% adoption} across 50 team members in month one.
 \end{itemize}
 \vspace{3pt}
 
 \role{Machine Learning Scientist}{Unilever United States, Inc}{New York, NY \textbar\ Sep 2023 -- Dec 2023}{}
 \begin{itemize}
-  \item Built a \textbf{multi-modal neural network} (PyTorch/Keras) fusing tabular product features with fine-tuned VGG16 image embeddings,
-  improving sales-volume \textbf{R\textsuperscript{2} by 54\%} over an XGBoost baseline and optimizing \textbf{\$3M} in supply chain cost.
-  \item Engineered a \textbf{PySpark} ETL pipeline over $\sim$100\,GB of heterogeneous merchant data; deployed end to end on \textbf{GCP} for
-  real-time forecasting, improving operational efficiency \textbf{20\%}.
+  \item Built a \textbf{multi-modal neural network} (PyTorch/Keras) fusing tabular product features with fine-tuned VGG16 image embeddings, deployed on
+  \textbf{GCP} for real-time forecasting: sales-volume \textbf{R\textsuperscript{2} +54\%} over XGBoost, optimizing \textbf{\$3M} in supply chain cost.
 \end{itemize}
 
 %==================== SKILLS ====================
@@ -122,10 +127,9 @@ Claude Code and Codex; first author on an EMBC 2026 oral. Reviewer, NeurIPS 2026
 \vspace{1pt}
 {\footnotesize
 \begin{tabularx}{\textwidth}{@{}p{1.35in}X@{}}
-  \textbf{LLM \& Generative AI} & Transformers (Hugging Face), LLM \& coding agents, retrieval/ranking (RAG, BM25, graph retrieval), fine-tuning (LoRA, triplet loss), Sentence-BERT, few-shot learning, OpenAI API, evaluation (Acc@k, Recall@k, MRR, BLEU) \\
-  \textbf{ML \& Deep Learning} & PyTorch, TensorFlow, Keras, Scikit-learn, LightGBM, XGBoost, Optuna; attention, cross-modal \& generative models, self-supervised learning, foundation model pretraining, time-series \& biosignals \\
-  \textbf{Languages \& Data} & Python, SQL, R, Java, JavaScript, C++, MATLAB, Bash; Spark, PySpark, Dask, Pandas, Databricks, Delta Lake, Airflow, Hadoop, MySQL, PostgreSQL, MongoDB, Flask \\
-  \textbf{Cloud} & AWS (EC2, S3, Redshift), Azure (VM, DevOps), GCP (VM, Cloud Storage, BigQuery); Tableau, Power BI \\
+  \textbf{Agents \& LLMs} & LLM \& coding agents, world models, agent memory, RL post-training (GRPO), fine-tuning (LoRA, distillation), retrieval/ranking (RAG, BM25, graph retrieval), Hugging Face Transformers, Sentence-BERT, OpenAI API, agent evaluation \\
+  \textbf{ML \& Deep Learning} & PyTorch, TensorFlow, Keras, Scikit-learn, XGBoost; graph neural networks (R-GCN), attention, cross-modal \& generative models, self-supervised pretraining, time-series \& biosignals \\
+  \textbf{Languages \& Infra} & Python, SQL, R, Java, C++, Bash; Spark, PySpark, Pandas, Databricks, Airflow, PostgreSQL; AWS, Azure, GCP \\
 \end{tabularx}
 }
 

@@ -65,8 +65,8 @@ human input. Co-first author of \textbf{Software World Models} (predicting what 
     libraries, and datastores a locally correct change will break) \textit{before} execution, beyond what the agent itself observes.
     \item Built \textbf{Explore--Learn--Act}: execute counterfactual changes from restored system states, train Qwen2.5-Coder with \textbf{GRPO} on
     executed outcomes (plus an R-GCN graph-token variant with \textbf{SC-GRPO}), and act on per-consumer break probabilities.
-    \item Blast-set F1 \textbf{0.431\,$\rightarrow$\,0.571} vs.\ static reachability and ranking regret \textbf{more than halved}; on held-out real libraries,
-    agent return \textbf{0.453\,$\rightarrow$\,0.613}, above the CWM and Qwen-AgentWorld world-model baselines.
+    \item \textbf{32\% higher} blast-set F1 and \textbf{59\% lower} ranking regret than static reachability analysis; on held-out real libraries,
+    \textbf{35\% higher} per-episode agent return than the base coding agent, outperforming Meta CWM and Qwen-AgentWorld.
   \end{itemize}
 
   \item Y.~Hu, \textbf{T.~Su}, Y.~Sun, S.~Ma, Q.~Tan, L.~Zhao. ``Adaptive Memory Index Evolution for Agents.''

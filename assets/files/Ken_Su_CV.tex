@@ -61,8 +61,8 @@ human input. Co-first author of \textbf{Software World Models} (predicting what 
   \item \textbf{T.~Su}\textsuperscript{*}, Y.~Hu\textsuperscript{*}, L.~Zhao, B.~Zhu, J.~Somasundaram, H.~Haque. ``Software World Models: From
   Consequence Prediction to Decision Value.'' \textit{arXiv:2610.04940}, 2026. \textit{(Under review; \textsuperscript{*}equal contribution.)}
   \begin{itemize}
-    \item Formulated \textbf{system-level consequence prediction} for coding agents: predict the \textbf{blast set} --- the downstream services,
-    libraries, and datastores a locally correct change will break --- \textit{before} execution, beyond what the agent itself observes.
+    \item Formulated \textbf{system-level consequence prediction} for coding agents: predict the \textbf{blast set} (the downstream services,
+    libraries, and datastores a locally correct change will break) \textit{before} execution, beyond what the agent itself observes.
     \item Built \textbf{Explore--Learn--Act}: execute counterfactual changes from restored system states, train Qwen2.5-Coder with \textbf{GRPO} on
     executed outcomes (plus an R-GCN graph-token variant with \textbf{SC-GRPO}), and act on per-consumer break probabilities.
     \item Blast-set F1 \textbf{0.431\,$\rightarrow$\,0.571} vs.\ static reachability and ranking regret \textbf{more than halved}; on held-out real libraries,
@@ -88,14 +88,15 @@ human input. Co-first author of \textbf{Software World Models} (predicting what 
 
   \item \textbf{T.~Su}, A.~Rafiei, M.~van Assen, R.~Sameni, G.~D.~Clifford, F.~Marzbanrad, N.~Katebi. ``Cross-Modal Generative
   Framework for Signal Translation from Fetal--Maternal Electrocardiograms to Fetal Doppler Waveforms.''
-  \textit{IEEE EMBC 2026}. \textbf{Accepted --- Oral Presentation.}
+  \textit{IEEE EMBC 2026}. \textbf{Accepted (Oral Presentation).}
   \begin{itemize}
     \item Designed a cross-modal generator (dilated convolutions + \textbf{cross-modal attention} + self-attention) for ECG-to-Doppler translation:
     PSD MSE \textbf{51\% below} baseline; ablations show naive concatenation adds nothing while cross-modal attention cuts error \textbf{39\%}.
   \end{itemize}
 
   \item \textbf{T.~Su}, N.~Barari, N.~Katebi. ``A Review of Multimodal Pretraining Strategies for Physiological Wearable Sensor
-  Foundation Models.'' \textit{Under review}, 2026. --- Taxonomy of five multimodal pretraining paradigms over \textbf{22 papers} across PPG/ECG/EEG/ACC.
+  Foundation Models.'' \textit{Under review}, 2026. Taxonomy of foundation-model \textbf{pretraining strategies}: contrastive, masked/generative
+  reconstruction, language-grounded alignment, missing-modality learning, and cross-modal distillation.
 \end{enumerate}
 
 %==================== EXPERIENCE ====================
@@ -103,12 +104,12 @@ human input. Co-first author of \textbf{Software World Models} (predicting what 
 \role{Research Intern}{Causal Dynamics Lab}{May 2026 -- Aug 2026}{}
 \begin{itemize}
   \item Researched coding agents and code intelligence; built a \textbf{software world model} for multi-repository microservice systems that predicts which
-  downstream services, libraries, and datastores an agent's change will break \textit{before} it reaches CI/CD --- failures local tests miss.
+  downstream services, libraries, and datastores a change will break \textit{before} it reaches CI/CD, catching failures local tests miss.
   \item Engineered a sandboxed \textbf{execution harness} that restores frozen system baselines, applies one patch, and reruns unit, service-health, and
   end-to-end checks across Go/Node/Python \textbf{gRPC microservices} and real library ecosystems (Marshmallow, OpenTelemetry).
   \item Built the training and serving pipeline: typed cross-repo dependency graphs (services, endpoints, schemas) fed to the LLM as graph tokens,
   \textbf{SFT + GRPO} on executed outcomes, and a \textbf{pre-merge risk check} that lets the agent rank changes, migrate consumers before shipping,
-  and run costly integration checks only when worthwhile --- \textbf{$\sim$40\% fewer} services left broken on held-out systems.
+  and run costly integration checks only when worthwhile, leaving \textbf{$\sim$40\% fewer} services broken on held-out systems.
 \end{itemize}
 \vspace{3pt}
 

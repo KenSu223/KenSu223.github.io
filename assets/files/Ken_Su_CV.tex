@@ -1,4 +1,4 @@
-% Ken (Tongli) Su - 1-page resume, PUBLIC WEBSITE VERSION (phone number removed). Synced from Ken_Su_Resume_PhD_1page.tex on 2026-11-04.
+% Ken (Tongli) Su - 1-page resume, PUBLIC WEBSITE VERSION (phone number removed). Synced from Ken_Su_Resume_PhD_1page.tex on 2026-11-04 (after the base rewrite).
 % Compile with: tectonic -X compile Ken_Su_CV.tex
 \documentclass[letterpaper,10pt]{article}
 
@@ -8,13 +8,21 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
 \usepackage{tabularx}
-\usepackage[T1]{fontenc}
-\usepackage{charter}
+% Font: macOS system Charter via fontspec (tectonic/XeTeX). Common ligatures (fi, fl) are off so that
+% ATS text extraction reads "fine-tuned", "identification", etc. as plain words.
+\usepackage{fontspec}
+\setmainfont{Charter}[Ligatures={NoCommon}]
 
 \definecolor{accent}{HTML}{1F3864}
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
+\hyphenpenalty=10000 \emergencystretch=1.5em % no word splitting, so ATS text extraction stays clean
+
+% Type sizes: body 9.5pt; summary and skills 9pt.
+\newcommand{\BODYSIZE}{\fontsize{9.5}{11.3}\selectfont}
+\newcommand{\SUMMARYSIZE}{\fontsize{9}{10.8}\selectfont}
+\newcommand{\SKILLSIZE}{\fontsize{9}{10.8}\selectfont}
 
 \titleformat{\section}{\small\bfseries\color{accent}}{}{0em}{}[\vspace{-0.65em}\rule{\textwidth}{0.8pt}]
 \titlespacing*{\section}{0pt}{5pt}{3pt}
@@ -30,86 +38,78 @@
 }
 
 \begin{document}
-\small
+\BODYSIZE
 
 %==================== HEADER ====================
 \begin{center}
   {\LARGE\bfseries Ken (Tongli) Su}\\[3pt]
   {\small \href{mailto:ken.su@emory.edu}{ken.su@emory.edu} \textperiodcentered\
-  \href{https://www.linkedin.com/in/ken-su}{linkedin.com/in/ken-su} \textperiodcentered\ \href{https://kensu223.github.io}{kensu223.github.io} \textperiodcentered\ Atlanta, GA}
+  \href{https://kensu223.github.io}{kensu223.github.io} \textperiodcentered\
+  \href{https://scholar.google.com/citations?user=1u6fBBAAAAAJ&hl=en}{Google Scholar} \textperiodcentered\
+  \href{https://github.com/KenSu223}{github.com/KenSu223} \textperiodcentered\
+  \href{https://www.linkedin.com/in/ken-su}{linkedin.com/in/ken-su}}
 \end{center}
 \vspace{-2pt}
 
-{\footnotesize
-CS PhD student working on \textbf{LLM agents, alignment, interpretability, and safety}, especially multi-agent
-collaboration and theory of mind: agents that reason about collaborators' beliefs, adapt to human values, and know when to seek
-human input. Co-first author of \textbf{Software World Models} (predicting what a change breaks before it runs) and
-\textbf{LARGER} (beats 7 baselines incl.\ Claude Code, Codex); first author, EMBC 2026 oral. Reviewer, NeurIPS 2026.
+{\SUMMARYSIZE
+CS PhD student working on \textbf{LLM agents}, with \textbf{alignment and safety} as the long-term direction. Current work gives coding agents
+a \textbf{world model} of what a change will break before it runs, \textbf{memory} that stays reachable over long horizons, and
+\textbf{repository-graph retrieval} inside their own search loop. 2+ years of prior industry ML engineering (GenAI, retrieval, data pipelines).
 \par}
 \vspace{1pt}
 
 %==================== EDUCATION ====================
 \section{Education}
-\edu{Emory University}{Atlanta, GA}{Ph.D. in Computer Science}{Aug 2025 -- Dec 2028 (expected)}
+\edu{Emory University}{Atlanta, GA}{Ph.D. in Computer Science (Advisor: Ali Emami)}{Aug 2025 -- Dec 2028 (expected)}
 \edu{Columbia University}{New York, NY}{M.S. in Data Science, GPA: 3.95/4.00}{Dec 2023}
 \edu{Emory University}{Atlanta, GA}{B.A. in Computer Science \& B.A. in Economics (Dual Major), GPA: 3.84/4.00}{May 2022}
 
 %==================== PUBLICATIONS ====================
 \section{Selected Publications \& Research}
 \vspace{1pt}
-\begin{enumerate}[leftmargin=1.3em, itemsep=3pt, topsep=0pt, parsep=0pt, label={[\arabic*]}]
+\begin{enumerate}[leftmargin=1.3em, itemsep=2pt, topsep=0pt, parsep=0pt, label={[\arabic*]}]
   \item \textbf{T.~Su}\textsuperscript{*}, Y.~Hu\textsuperscript{*}, L.~Zhao, B.~Zhu, J.~Somasundaram, H.~Haque. \textbf{``Software World Models: From
   Consequence Prediction to Decision Value.''} \textit{arXiv:2610.04940}, 2026. \textit{(Under review; \textsuperscript{*}equal contribution.)}
   \begin{itemize}
-    \item Formulated \textbf{system-level consequence prediction} for coding agents: predict the \textbf{blast set} (the downstream services,
-    libraries, and datastores a locally correct change will break) \textit{before} execution, beyond what the agent itself observes.
-    \item Built \textbf{Explore--Learn--Act}: execute counterfactual changes from restored system states, train Qwen2.5-Coder with \textbf{GRPO} on
-    executed outcomes (plus an R-GCN graph-token variant with \textbf{SC-GRPO}), and act on per-consumer break probabilities.
-    \item \textbf{32\% higher} blast-set F1 and \textbf{59\% lower} ranking regret than static reachability analysis; on held-out real libraries,
-    \textbf{35\% higher} per-episode agent return than the base coding agent, outperforming Meta CWM and Qwen-AgentWorld.
+    \item Formulated \textbf{system-level consequence prediction} (forecast the \textbf{blast set} a change will break before it runs) and trained the
+    world model with \textbf{GRPO} on executed outcomes: \textbf{32\% higher} blast-set F1 and \textbf{59\% lower} ranking regret than static reachability;
+    \textbf{35\% higher} agent return on held-out real libraries, outperforming Meta CWM and Qwen-AgentWorld.
   \end{itemize}
 
-  \item Y.~Hu, \textbf{T.~Su}, Y.~Sun, S.~Ma, Q.~Tan, L.~Zhao. \textbf{``Adaptive Memory Index Evolution for Agents.''}
+  \item Y.~Hu, \textbf{T.~Su}, Y.~Sun, S.~Ma, Q.~Tan, L.~Zhao. \textbf{``Adaptive Memory Index Evolution for Agents.''}\newline
   \textit{arXiv:2610.34977}, 2026. \textit{(Under review.)}
   \begin{itemize}
-    \item \textbf{AMIE}: a plug-in \textbf{memory index evolution} layer that distills an LLM teacher's keep/suppress judgments into a Qwen3-8B LoRA policy and
-    accumulates them into persistent per-memory access state, with no change to stored content or host retraining. Improved downstream
-    F1/accuracy in \textbf{all 15} comparisons (\textbf{5 memory systems} incl.\ Mem0, A-MEM $\times$ \textbf{3 benchmarks}) by up to \textbf{25\%} relative.
+    \item \textbf{AMIE}: a plug-in layer that distills an LLM teacher's keep/suppress judgments into a \textbf{Qwen3-8B LoRA} policy that evolves
+    per-memory access state; improved F1/accuracy in \textbf{all 15} comparisons (\textbf{5 memory systems} $\times$ \textbf{3 benchmarks}) by up to \textbf{25\%}.
   \end{itemize}
 
   \item Y.~Hu\textsuperscript{*}, \textbf{T.~Su}\textsuperscript{*}, L.~Zhao, B.~Zhu, H.~Haque. \textbf{``LARGER: Lexically Anchored
-  Repository Graph Exploration and Retrieval.''}\newline\textit{arXiv:2605.16352}, 2026. \textit{(Under review; \textsuperscript{*}equal contribution.)}
+  Repository Graph Exploration and Retrieval.''} \textit{arXiv:2605.16352}, 2026. \textit{(Under review; \textsuperscript{*}equal contribution.)}
   \begin{itemize}
-    \item Anchored a coding agent's own lexical search hits into a repository graph and expanded confidence-filtered neighborhoods
-    \textit{inside} its search loop (imports, call chains, code--test links) with no added agent actions; built \textbf{AST-based graph construction} end to end.
-    \item \textbf{+13.9 Acc@5} and \textbf{+12.2 Recall@5} over the strongest of \textbf{7 baselines} (BM25, Agentless, LocAgent, SWE-agent, OpenHands,
-    Claude Code, Codex) across \textbf{4 benchmarks} spanning localization, test generation, and codebase QA.
+    \item Anchored a coding agent's lexical search hits in a repository graph and expanded confidence-filtered neighborhoods (imports, call
+    chains, code--test links) \textit{inside} its search loop with no new actions; built the \textbf{AST-based graph construction}.
+    \item \textbf{+13.9 Acc@5} and \textbf{+12.2 Recall@5} over the strongest of \textbf{7 baselines} (incl.\ SWE-agent, OpenHands, Claude Code, Codex)
+    across \textbf{4 benchmarks} spanning localization, test generation, and codebase QA.
   \end{itemize}
 
   \item \textbf{T.~Su}, A.~Rafiei, M.~van Assen, R.~Sameni, G.~D.~Clifford, F.~Marzbanrad, N.~Katebi. \textbf{``Cross-Modal Generative
   Framework for Signal Translation from Fetal--Maternal Electrocardiograms to Fetal Doppler Waveforms.''}
   \textit{IEEE EMBC 2026} (\textbf{Oral}).
-  \begin{itemize}
-    \item Designed a cross-modal generator (dilated convolutions + \textbf{cross-modal attention} + self-attention) for ECG-to-Doppler translation:
-    PSD MSE \textbf{51\% below} baseline; ablations show naive concatenation adds nothing while cross-modal attention cuts error \textbf{39\%}.
-  \end{itemize}
 
   \item \textbf{T.~Su}, N.~Barari, N.~Katebi. \textbf{``A Review of Multimodal Pretraining Strategies for Physiological Wearable Sensor
-  Foundation Models.''} \textit{Under review}, 2026. Taxonomy of foundation-model \textbf{pretraining strategies}: contrastive, masked/generative
-  reconstruction, language-grounded alignment, missing-modality learning, and cross-modal distillation.
+  Foundation Models.''} \textit{Under review}, 2026.
 \end{enumerate}
 
 %==================== EXPERIENCE ====================
 \section{Industry Experience}
 \role{Research Intern}{Causal Dynamics Lab}{Seattle, WA \textbar\ May 2026 -- Aug 2026}{}
 \begin{itemize}
-  \item Researched coding agents and code intelligence; built a \textbf{software world model} for multi-repository microservice systems that predicts which
-  downstream services, libraries, and datastores a change will break \textit{before} it reaches CI/CD, catching failures local tests miss.
-  \item Engineered a sandboxed \textbf{execution harness} that restores frozen system baselines, applies one patch, and reruns unit, service-health, and
-  end-to-end checks across Go/Node/Python \textbf{gRPC microservices} and real library ecosystems (Marshmallow, OpenTelemetry).
-  \item Built the training and serving pipeline: typed cross-repo dependency graphs (services, endpoints, schemas) fed to the LLM as graph tokens,
-  \textbf{SFT + GRPO} on executed outcomes, and a \textbf{pre-merge risk check} that lets the agent rank changes, migrate consumers before shipping,
-  and run costly integration checks only when worthwhile, leaving \textbf{$\sim$40\% fewer} services broken on held-out systems.
+  \item Built a \textbf{software world model} for multi-repository microservice systems that predicts which downstream services, libraries, and
+  datastores a change will break \textit{before} it reaches CI/CD, catching failures that local tests miss.
+  \item Engineered a sandboxed \textbf{execution harness} that restores frozen baselines, applies a patch, and reruns unit, service-health, and
+  end-to-end checks across Go/Node/Python \textbf{gRPC microservices} and real libraries (Marshmallow, OpenTelemetry).
+  \item Built the training and serving pipeline (dependency graphs as LLM graph tokens, \textbf{SFT~+~GRPO} on executed outcomes) and a
+  \textbf{pre-merge risk check} that runs costly integration checks only when needed: \textbf{$\sim$40\% fewer} services broken on held-out systems.
 \end{itemize}
 \vspace{3pt}
 
@@ -118,19 +118,23 @@ human input. Co-first author of \textbf{Software World Models} (predicting what 
   \item Built a lead identification pipeline on \textbf{Azure Databricks} (Spark, Delta Lake, generative models) behind an internal sales co-pilot that
   became the company's primary prospecting tool (\textbf{\$60M+} estimated value); fine-tuned \textbf{Sentence-BERT} with triplet loss for retrieval and
   ranking: \textbf{Recall@5 0.86}, \textbf{MRR 0.64}, \textbf{+27\%} over the incumbent GPT-based system with hallucinations eliminated.
-  \item Engineered an async, load-balanced \textbf{OpenAI API} enrichment module: runtime 10\,h\,$\rightarrow$\,6\,h (\textbf{40\%}), token costs \textbf{--\$12K/yr}.
-  \item Turned user feedback into model and feature improvements over a six-week sprint: \textbf{DAU +48\%}, user satisfaction 4.0\,$\rightarrow$\,4.6/5.
+  \item Engineered an async, load-balanced \textbf{OpenAI API} enrichment module: runtime 10\,h\,$\rightarrow$\,6\,h (\textbf{40\%}), saving \textbf{\$12K/yr} in token costs.
+  \item Turned user feedback into model and feature improvements in a six-week sprint: \textbf{DAU +48\%}, satisfaction 4.0\,$\rightarrow$\,4.6/5.
 \end{itemize}
 
 %==================== SKILLS ====================
 \section{Technical Skills}
 \vspace{1pt}
-{\footnotesize
-\begin{tabularx}{\textwidth}{@{}p{1.35in}X@{}}
-  \textbf{Agents \& LLMs} & LLM \& coding agents, world models, agent memory, RL post-training (GRPO), fine-tuning (LoRA, distillation), retrieval/ranking (RAG, BM25, graph retrieval), Hugging Face Transformers, Sentence-BERT, OpenAI API, agent evaluation \\
-  \textbf{ML \& Deep Learning} & PyTorch, TensorFlow, Keras, Scikit-learn, XGBoost; graph neural networks (R-GCN), attention, cross-modal \& generative models, self-supervised pretraining, time-series \& biosignals \\
-  \textbf{Languages \& Infra} & Python, SQL, R, Java, C++, Bash; Spark, PySpark, Pandas, Databricks, Airflow, PostgreSQL; AWS, Azure, GCP \\
+{\SKILLSIZE
+\begin{tabularx}{\textwidth}{@{}p{1.25in}X@{}}
+  \textbf{Agents \& LLMs} & LLM \& coding agents, world models, agent memory, agent evaluation, RL post-training (SFT, GRPO), LoRA, distillation, retrieval \& ranking (RAG, BM25, graph retrieval), Hugging Face, Sentence-BERT, OpenAI API \\
+  \textbf{ML \& Deep Learning} & PyTorch, Scikit-learn, XGBoost; graph neural networks (R-GCN), attention, cross-modal \& generative models, self-supervised pretraining, time-series \& biosignals \\
+  \textbf{Languages \& Infra} & Python, SQL, C++, Bash; Spark, PySpark, Pandas, Databricks, Delta Lake, PostgreSQL; AWS, Azure, GCP \\
 \end{tabularx}
 }
+
+%==================== SERVICE ====================
+\section{Service \& Honors}
+Reviewer, \textbf{NeurIPS 2026} \textperiodcentered\ Oral presentation, \textbf{IEEE EMBC 2026} (first author)
 
 \end{document}
